@@ -1,34 +1,36 @@
 from unittest import TestCase
 
 from apply import PrototypeCreator
-from model.my_example import ObjetoSimple
+from model.automovil import Automovil
 
 
 class TestPrototyping(TestCase):
 
-    def test_create_a_prototype(self):
-        simple_object = ObjetoSimple()
-        mi_prototipo = PrototypeCreator(simple_object).get()
-        self.assertTrue(type(simple_object), type(mi_prototipo))
-        self.assertTrue(not simple_object == mi_prototipo)
-        self.assertEqual(simple_object.my_function_1(), mi_prototipo.my_function_1())
-        self.assertEqual(simple_object.my_function_2(), mi_prototipo.my_function_2())
+    def test_when_create_a_car_then_prototype_it_should_be_pretty_similar(self):
+        my_car = Automovil("poncho", "azul")
+        creator = PrototypeCreator(my_car)
+        mi_prototipo = creator.get()
+        self.assertEquals(type(my_car), type(mi_prototipo))
+        self.assertTrue(not my_car == mi_prototipo)
+        self.assertEqual(my_car.marca(), mi_prototipo.marca())
+        self.assertEqual(my_car.color(), mi_prototipo.color())
 
-    def test_create_a_prototype_change_func(self):
-        simple_object = ObjetoSimple()
-        replacer = (lambda: "another response")
-        mi_prototipo = PrototypeCreator(simple_object, {"my_function_1": replacer}).get()
-        self.assertTrue(type(simple_object), type(mi_prototipo))
-        self.assertTrue(not simple_object == mi_prototipo)
-        self.assertEqual(simple_object.my_function_1(), "hola mundo 01")
-        self.assertEqual(mi_prototipo.my_function_1(), "another response")
-        self.assertEqual(simple_object.my_function_2(), mi_prototipo.my_function_2())
+    def test_create_a_prototype_from_car_and_replace_color(self):
+        auto_original = Automovil("poncho", "azul")
+        replacer = (lambda: "rojo")
+        creator = PrototypeCreator(auto_original, {"color": replacer})
+        mi_prototipo = creator.get()
+        self.assertTrue(type(auto_original), type(mi_prototipo))
+        self.assertTrue(not auto_original == mi_prototipo)
+        self.assertEqual(auto_original.color(), "azul")
+        self.assertEqual(mi_prototipo.color(), "rojo")
+        self.assertEqual(auto_original.marca(), mi_prototipo.marca())
 
     def test_create_a_prototype_remove_func(self):
-        simple_object = ObjetoSimple()
-        replacer = (lambda: "another response")
-        creator = PrototypeCreator(simple_object, {"my_function_1": replacer})
+        auto_original = Automovil("poncho", "azul")
+        replacer = (lambda: "verde")
+        creator = PrototypeCreator(auto_original, {"color": replacer})
         mi_prototipo = creator.get()
-        self.assertEqual(mi_prototipo.my_function_1(), "another response")
-        creator.remove_method(mi_prototipo, "my_function_1")
-        self.assertEqual(mi_prototipo.my_function_1(), "hola mundo 01")
+        self.assertEqual(mi_prototipo.color(), "verde")
+        creator.remove_method(mi_prototipo, "color")
+        self.assertEqual(mi_prototipo.color(), "azul")
