@@ -12,9 +12,7 @@ class PrototypeCreator(object):
 
     def __create_prototype(self):
         prototype = Prototypical()
-        old_get_att = (lambda: prototype.__getattribute__)
         prototype.__class__ = self.__simple_object.__class__
-        prototype.__getattribute__ = old_get_att
         if self.__methods_replace:
             for key, value in self.__methods_replace.items():
                 prototype.__dict__[key] = value
