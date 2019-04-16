@@ -4,7 +4,7 @@ class Prototypical(object):
         pass
 
 
-class PrototypeCreator(object):
+class DelegateCreator(object):
 
     def __init__(self, prototype, methods_replace = None):
         self.__prototype = prototype
@@ -27,11 +27,11 @@ class PrototypeCreator(object):
         for value in vars(self.__prototype):
             result.__dict__[value] = self.__prototype.__dict__[value]
 
-    def remove_method(self, my_prototype, param, ):
-        del my_prototype.__dict__[param]
-        if param in my_prototype.__class__.__dict__.keys():
-            meth = my_prototype.__class__.__dict__[param]
-            my_prototype.__dict__[param] =(lambda: meth(my_prototype))
+    def remove_method(self, my_delegate, param, ):
+        del my_delegate.__dict__[param]
+        if param in my_delegate.__class__.__dict__.keys():
+            meth = my_delegate.__class__.__dict__[param]
+            my_delegate.__dict__[param] =(lambda: meth(my_delegate))
 
 
 
