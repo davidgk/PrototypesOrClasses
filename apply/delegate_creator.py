@@ -4,7 +4,7 @@ class Prototypical(object):
         pass
 
 
-class PrototypeCreator(object):
+class DelegateCreator(object):
 
     def __init__(self, prototype, methods_replace = None):
         self.__prototype = prototype
