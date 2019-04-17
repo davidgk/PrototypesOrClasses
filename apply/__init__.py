@@ -1,3 +1,3 @@
-from apply.prototype_creator import PrototypeCreator
+from apply.delegate_creator import DelegateCreator
 
-__all__=[PrototypeCreator]
+__all__=[DelegateCreator]

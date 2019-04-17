@@ -32,7 +32,3 @@ class DelegateCreator(object):
         if param in my_delegate.__class__.__dict__.keys():
             meth = my_delegate.__class__.__dict__[param]
             my_delegate.__dict__[param] =(lambda: meth(my_delegate))
-
-
-
-
